@@ -120,3 +120,101 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1 {
+    font-size: 2em; /* 32px */
+    font-weight: bold;
+  }
+  h2 {
+    font-size: 1.5em; /* 24px */
+  }
+  h3 {
+    font-size: 1.17em; /* 18.72px */
+  }
+  h4 {
+    font-size: 1em; /* 16px */
+  }
+  h5 {
+    font-size: 0.83em; /* 13.28px */
+  }
+  h6 {
+    font-size: 0.67em; /* 10.72px */
+  }
+
+  ol {
+    list-style: decimal;
+  }
+  ul {
+    list-style: inherit;
+  }
+}
+
+@layer utilities {
+  .h-minus-80 {
+    height: calc(100vh - 80px);
+  }
+
+  .h-minus-135 {
+    height: calc(100vh - 135px);
+  }
+
+  .h-minus-230 {
+    height: calc(100vh - 230px);
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: none;
+  font-weight: normal;
+}
+
+/* scrollbar styles  */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.mention-dropdown-menu,
+.mention-dropdown-menu button {
+  pointer-events: auto !important;
+}
+
+.recharts-default-legend {
+  margin-bottom: 20px !important;
+  margin-top: -10px !important;
+  text-align: right !important;
+}
+
+body[style*='overflow: hidden'] {
+  padding-right: var(--removed-body-scroll-bar-size, 0px);
+}
