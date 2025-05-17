@@ -8,21 +8,16 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Link from 'next/link';
-import { auth } from '@/utils/auth';
+import { auth, type AuthError } from '@/utils/auth';
 import { toast } from 'sonner';
-import { getAuthError } from '@/utils/auth-errors';
-import { OAuthSignIn } from '@/components/auth/OAuthSignIn';
 
-export function CreateAccountForm() {
+export function ResetPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
@@ -30,7 +25,7 @@ export function CreateAccountForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Validation Error', {
+      toast.error('Error', {
         description: 'Passwords do not match',
       });
       return;
@@ -38,16 +33,15 @@ export function CreateAccountForm() {
 
     try {
       setIsLoading(true);
-      await auth.signUp(email, password);
+      await auth.resetPassword(password);
       toast.success('Success', {
-        description: 'Please check your email to verify your account.',
+        description: 'Your password has been reset.',
       });
       router.push('/login');
     } catch (error) {
-      const { message } = getAuthError(error);
-
-      toast.error('Account Creation Error', {
-        description: message,
+      const authError = error as AuthError;
+      toast.error('Error', {
+        description: authError.message,
       });
     } finally {
       setIsLoading(false);
@@ -58,33 +52,14 @@ export function CreateAccountForm() {
     <Card className="w-96">
       <form onSubmit={handleSubmit}>
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Create an account</CardTitle>
+          <CardTitle className="text-2xl">Reset password</CardTitle>
           <CardDescription className="text-xs">
-            Enter your email below to create your account
+            Enter your new password
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <div>
-            Already have an account?{' '}
-            <Link href="/login" className="text-blue-500">
-              Login
-            </Link>
-          </div>
-
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={isLoading}
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">New Password</Label>
             <Input
               id="password"
               type="password"
@@ -105,17 +80,13 @@ export function CreateAccountForm() {
               required
             />
           </div>
-
           <Button className="w-full" type="submit" disabled={isLoading}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Create account
+            Reset password
           </Button>
         </CardContent>
-        <CardFooter>
-          <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsLoading} />
-        </CardFooter>
       </form>
     </Card>
   );

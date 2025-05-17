@@ -1,11 +1,11 @@
-"use client";
+'use client';
 import {
   CircleUser,
   CreditCard,
   LogOut,
   Plus,
   User as UserIcon,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,13 +14,32 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Link from "next/link";
-import { Button } from "./ui/button";
+} from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
+import { Button } from './ui/button';
+import Image from 'next/image';
+import { auth } from '@/utils/auth';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import type { User } from '@supabase/supabase-js';
 
-export function UserMenu() {
+interface UserMenuProps {
+  user: User;
+}
+
+export function UserMenu({ user }: UserMenuProps) {
+  const router = useRouter();
+
   const handleSignOut = async () => {
-    console.log("Signing out...");
+    try {
+      await auth.signOut();
+      router.push('/login');
+      router.refresh();
+    } catch (error) {
+      toast.error('Error', {
+        description: 'Failed to sign out. Please try again.',
+      });
+    }
   };
 
   return (
@@ -31,7 +50,17 @@ export function UserMenu() {
           size="icon"
           className="relative h-9 w-9 rounded-full border bg-background"
         >
-         <CircleUser className="h-5 w-5" />
+          {user.user_metadata.avatar_url ? (
+            <Image
+              src={user.user_metadata.avatar_url}
+              alt={user.email || ''}
+              fill
+              className="rounded-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <CircleUser className="h-5 w-5" />
+          )}
           <span className="sr-only">Open user menu</span>
         </Button>
       </DropdownMenuTrigger>
@@ -40,10 +69,10 @@ export function UserMenu() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              Aditya Maurya
+              {user.user_metadata.full_name || user.email}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              adityamaurya.2807@gmail.com
+              {user.email}
             </p>
           </div>
         </DropdownMenuLabel>
