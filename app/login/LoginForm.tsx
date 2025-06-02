@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { auth } from '@/utils/auth';
-import { toast } from 'sonner';
+import { useToast } from '@/components/ui/use-toast';
 import { getAuthError } from '@/utils/auth-errors';
 import { OAuthSignIn } from '@/components/auth/OAuthSignIn';
 
@@ -25,6 +25,7 @@ export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +37,9 @@ export function LoginForm() {
     } catch (error) {
       console.error('Auth error:', error);
       const { message } = getAuthError(error);
-      toast.error('Authentication Error', {
+      toast({
+        variant: 'destructive',
+        title: 'Authentication Error',
         description: message,
         duration: 5000,
       });
@@ -103,4 +106,3 @@ export function LoginForm() {
     </Card>
   );
 }
- 

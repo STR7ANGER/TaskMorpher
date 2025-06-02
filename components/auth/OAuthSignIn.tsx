@@ -4,7 +4,7 @@ import { Suspense, useState } from 'react';
 import { Icons } from '@/components/Icons';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/utils/auth';
-import { toast } from 'sonner';
+import { useToast } from '@/components/ui/use-toast';
 import { getAuthError } from '@/utils/auth-errors';
 import { useSearchParams } from 'next/navigation';
 
@@ -17,6 +17,7 @@ interface Props {
 // Separate component to handle search params
 function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
   const [internalLoading, setInternalLoading] = useState(false);
+  const { toast } = useToast();
   const searchParams = useSearchParams();
 
   // Use either provided redirectUrl or next param from URL
@@ -32,7 +33,9 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
       await auth.signInWithOAuth(provider, nextUrl);
     } catch (error) {
       const { message } = getAuthError(error);
-      toast.error('Authentication Error', {
+      toast({
+        variant: 'destructive',
+        title: 'Authentication Error',
         description: message,
       });
     } finally {

@@ -33,6 +33,7 @@ export const getAuthError = (
         message: 'This email is already registered. Try signing in instead.',
       };
     }
+    // ... rest of the error handling
   }
 
   // Handle error message directly

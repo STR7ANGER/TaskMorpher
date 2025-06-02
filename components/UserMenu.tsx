@@ -20,7 +20,7 @@ import { Button } from './ui/button';
 import Image from 'next/image';
 import { auth } from '@/utils/auth';
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
+import { useToast } from './ui/use-toast';
 import type { User } from '@supabase/supabase-js';
 
 interface UserMenuProps {
@@ -29,6 +29,7 @@ interface UserMenuProps {
 
 export function UserMenu({ user }: UserMenuProps) {
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleSignOut = async () => {
     try {
@@ -36,7 +37,9 @@ export function UserMenu({ user }: UserMenuProps) {
       router.push('/login');
       router.refresh();
     } catch (error) {
-      toast.error('Error', {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
         description: 'Failed to sign out. Please try again.',
       });
     }

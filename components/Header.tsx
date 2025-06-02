@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import  ThemeToggle  from './ThemeToggle';
+import { ThemeToggle } from './ThemeToggle';
 import { UserMenu } from './UserMenu';
 import Link from 'next/link';
 import { Button } from './ui/button';
@@ -35,7 +35,7 @@ export const Header = ({ className }: HeaderProps) => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session) {
-        useAccessStore.getState().reset(); 
+        useAccessStore.getState().reset(); // Reset when session ends
       }
       setUser(session?.user ?? null);
     });
@@ -44,7 +44,7 @@ export const Header = ({ className }: HeaderProps) => {
   }, []);
 
   if (isLoading) {
-    return null;
+    return null; // or a loading spinner
   }
 
   return (
@@ -54,15 +54,15 @@ export const Header = ({ className }: HeaderProps) => {
         className
       )}
     >
-      <div className="ml-64 flex h-16 items-center justify-between">
+      <div className="container flex h-16 items-center justify-between">
         <Link
           href={user ? '/projects' : '/'}
           className="flex items-center space-x-2 font-bold text-xl hover:text-primary transition-colors"
         >
-          Task-Morpher
+          ProjeX
         </Link>
 
-        <div className="flex items-center gap-4 mr-34">
+        <div className="flex items-center gap-4">
           {user ? (
             <UserMenu user={user} />
           ) : (
@@ -79,7 +79,7 @@ export const Header = ({ className }: HeaderProps) => {
               )}
             </div>
           )}
-          <div className="border-l dark:border-gray-800 pl-4">
+          <div className="border-l pl-4 dark:border-gray-800">
             <ThemeToggle />
           </div>
         </div>

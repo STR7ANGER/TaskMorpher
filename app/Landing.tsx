@@ -38,13 +38,13 @@ const LandingPage: React.FC = () => {
   }, [supabase.auth]);
 
   if (isLoading) {
-    return null;
+    return null; // or a loading spinner
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
       {/* Hero Section */}
-      <div className=" pt-32 pb-20">
+      <div className="container pt-32 pb-20">
         {/* Content */}
         <div className="max-w-[800px] mx-auto text-center space-y-8 mb-20">
           <div className="space-y-6">

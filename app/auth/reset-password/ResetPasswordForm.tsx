@@ -14,18 +14,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { auth, type AuthError } from '@/utils/auth';
-import { toast } from 'sonner';
+import { useToast } from '@/components/ui/use-toast';
 
 export function ResetPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Error', {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
         description: 'Passwords do not match',
       });
       return;
@@ -34,13 +37,16 @@ export function ResetPasswordForm() {
     try {
       setIsLoading(true);
       await auth.resetPassword(password);
-      toast.success('Success', {
+      toast({
+        title: 'Success',
         description: 'Your password has been reset.',
       });
       router.push('/login');
     } catch (error) {
       const authError = error as AuthError;
-      toast.error('Error', {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
         description: authError.message,
       });
     } finally {

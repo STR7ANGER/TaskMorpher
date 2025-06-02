@@ -1,22 +1,17 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import AppProvider from "./AppProvider";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { cn } from '@/lib/utils';
+import { AppProvider } from './AppProvider';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const fontSans = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
 });
 
 export const metadata: Metadata = {
-  title: "Task Morpher",
-  description: "Project Management Application",
+  title: 'ProjeX',
+  description: 'Project Management App',
 };
 
 export default function RootLayout({
@@ -25,12 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          geistSans.variable,
-          geistMono.variable,
-          "min-h-screen bg-background font-sans antialiased"
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.variable
         )}
       >
         <AppProvider>{children}</AppProvider>
