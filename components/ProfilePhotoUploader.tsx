@@ -16,7 +16,7 @@ interface ProfilePhotoUploaderProps {
 }
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL;
-const BUCKET_NAME = 'profile_photos';
+const BUCKET_NAME = 'taskmorphers';
 
 export const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
   currentPhotoUrl,
