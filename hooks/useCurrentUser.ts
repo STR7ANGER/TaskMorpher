@@ -21,6 +21,11 @@ const fetchUserDetails = async (
     return null;
   }
 
+  // Check if data exists before accessing its properties
+  if (!data) {
+    return null;
+  }
+
   return {
     id: data.id,
     name: data.name,
