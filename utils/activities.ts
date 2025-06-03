@@ -56,7 +56,7 @@ export const activities = {
         )
       `
       )
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data as ActivityResponse;
@@ -136,7 +136,7 @@ export const activities = {
         )
       `
       )
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data as ActivityResponse;

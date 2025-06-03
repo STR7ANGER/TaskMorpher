@@ -20,7 +20,7 @@ export default async function SettingsPage({ params }: Props) {
     .from('projects')
     .select('*')
     .eq('id', projectId)
-    .single();
+    .maybeSingle();
 
   if (error || !project) redirect('/projects');
 

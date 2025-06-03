@@ -27,7 +27,7 @@ export default async function InvitePage({ params, searchParams }: Props) {
     .eq('project_id', projectId)
     .eq('user_id', user.id)
     .eq('invitationStatus', 'invited')
-    .single();
+    .maybeSingle();
 
   if (memberCheckError || !projectMember) {
     notFound();

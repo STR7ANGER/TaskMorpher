@@ -47,7 +47,7 @@ export const InviteUsers = ({
           .from('users')
           .select('*')
           .eq('id', session.user.id)
-          .single();
+          .maybeSingle();
         setCurrentUser(data);
       }
     }
@@ -108,7 +108,7 @@ export const InviteUsers = ({
         .select('id')
         .eq('project_id', projectId)
         .eq('user_id', selectedUser.id)
-        .single();
+        .maybeSingle();
 
       if (existingMember) {
         toast({

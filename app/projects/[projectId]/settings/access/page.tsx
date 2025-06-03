@@ -18,7 +18,7 @@ export default async function AccessPage({ params }: Props) {
 
   // Load project details and members
   const [{ data: project }, { data: members }] = await Promise.all([
-    supabase.from('projects').select('*').eq('id', projectId).single(),
+    supabase.from('projects').select('*').eq('id', projectId).maybeSingle(),
     supabase
       .from('project_members')
       .select(`*, user:users (id, name, email, avatar)`)

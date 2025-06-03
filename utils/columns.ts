@@ -9,7 +9,7 @@ export const columns = {
       .update({ limit })
       .eq('id', columnId)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data;
@@ -21,7 +21,7 @@ export const columns = {
       .update(updates)
       .eq('id', columnId)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data;
@@ -46,7 +46,7 @@ export const columns = {
         order: await this.getNextOrder(projectId),
       })
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return column;
@@ -59,7 +59,7 @@ export const columns = {
       .eq('project_id', projectId)
       .order('order', { ascending: false })
       .limit(1)
-      .single();
+      .maybeSingle();
 
     if (error && error.code !== 'PGRST116') throw error; // PGRST116 is "no rows returned"
     return (data?.order ?? -1) + 1;

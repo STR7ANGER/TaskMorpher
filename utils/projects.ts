@@ -19,7 +19,7 @@ export const projects = {
             closed: false,
           })
           .select()
-          .single();
+          .maybeSingle();
 
         if (projectError) throw projectError;
 
@@ -202,7 +202,7 @@ export const projects = {
         `
         )
         .eq('id', projectId)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       if (!data?.creator) return null;

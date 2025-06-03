@@ -27,7 +27,7 @@ export const users = {
       .from('users')
       .select('*')
       .eq('id', id)
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data as IUser | null;
@@ -38,7 +38,7 @@ export const users = {
       .from('users')
       .insert([user])
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data as IUser;
@@ -72,7 +72,7 @@ export const users = {
       .update(updates)
       .eq('id', id)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data as IUser;

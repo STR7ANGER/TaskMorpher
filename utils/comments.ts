@@ -59,7 +59,7 @@ export const comments = {
         )
       `
       )
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data as CommentResponse;
@@ -100,7 +100,7 @@ export const comments = {
         )
       `
       )
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data as CommentResponse;

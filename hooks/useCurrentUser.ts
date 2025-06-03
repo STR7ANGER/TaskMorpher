@@ -14,7 +14,7 @@ const fetchUserDetails = async (
     .from('users')
     .select('id, name, avatar, description, links')
     .eq('id', userId)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error('Error fetching user details:', error);

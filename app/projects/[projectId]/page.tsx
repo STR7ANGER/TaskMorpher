@@ -28,7 +28,7 @@ const ProjectDetailsPage = async ({ params }: Props) => {
     )
     .order('order', { referencedTable: 'statuses' })
     .eq('id', projectId)
-    .single();
+    .maybeSingle();
 
   if (error || !project) redirect('/projects');
 

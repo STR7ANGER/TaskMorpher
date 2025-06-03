@@ -10,7 +10,7 @@ const fontSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'ProjeX',
+  title: 'TaskMorpher',
   description: 'Project Management App',
 };
 

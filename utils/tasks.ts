@@ -48,7 +48,7 @@ export const tasks = {
         })
         .eq('id', taskId)
         .select('*')
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       return data as ITask;
@@ -68,7 +68,7 @@ export const tasks = {
         })
         .eq('id', taskId)
         .select('*')
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       return data as ITask;
@@ -95,7 +95,7 @@ export const tasks = {
         `
         )
         .eq('id', taskId)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
@@ -162,7 +162,7 @@ export const tasks = {
           .update({ ...updates, updated_at: new Date() })
           .eq('id', taskId)
           .select('*')
-          .single();
+          .maybeSingle();
 
         if (error) throw error;
         return data as ITask;
@@ -186,7 +186,7 @@ export const tasks = {
         })
         .eq('id', taskId)
         .select('*')
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       return data as ITask;
@@ -208,7 +208,7 @@ export const tasks = {
         )
       `
       )
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return createdTask as ITaskWithOptions;

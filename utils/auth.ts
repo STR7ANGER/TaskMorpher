@@ -17,7 +17,7 @@ export const auth = {
       .from('users')
       .select('id')
       .eq('email', email)
-      .single();
+      .maybeSingle();
 
     if (existingUser) {
       throw new Error(
@@ -104,7 +104,7 @@ export const auth = {
       .from('users')
       .select('id, provider')
       .eq('email', email)
-      .single();
+      .maybeSingle();
 
     if (userError && userError.code !== 'PGRST116') {
       // PGRST116 means no rows returned
