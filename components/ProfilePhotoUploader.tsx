@@ -15,7 +15,12 @@ interface ProfilePhotoUploaderProps {
   className?: string;
 }
 
-const STORAGE_URL = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL;
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const STORAGE_URL =
+  process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL ||
+  (SUPABASE_URL
+    ? `${SUPABASE_URL.replace(/\/$/, '')}/storage/v1/object/public`
+    : undefined);
 const BUCKET_NAME = 'taskmorphers';
 
 export const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
@@ -55,6 +60,12 @@ export const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
         .upload(filePath, file);
 
       if (error) throw error;
+
+      if (!STORAGE_URL) {
+        throw new Error(
+          'Missing Supabase storage URL. Set NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_STORAGE_URL.'
+        );
+      }
 
       // Construct the full URL
       const fullUrl = `${STORAGE_URL}/${BUCKET_NAME}/${data.path}`;
